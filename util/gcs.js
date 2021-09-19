@@ -23,8 +23,7 @@ const uploadFile = (file, path) => new Promise((resolve, reject) => {
      */
 
     const filePath = path == null ? `${uuidv4()}_${originalname}` :  `${path}/${uuidv4()}_${originalname}`
-  
-    const blob = bucket.file(filePath);
+    const blob = bucket.file(filePath.replace(/ /g, "_"));
     const blobStream = blob.createWriteStream({
         resumable: false
     });
