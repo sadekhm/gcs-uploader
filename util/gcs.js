@@ -13,7 +13,7 @@ const { format } = util;
  *   "originalname" and "buffer" as keys
  */
 
-const uploadFile = (file) => new Promise((resolve, reject) => {
+const uploadFile = (file, path) => new Promise((resolve, reject) => {
     const { originalname, buffer } = file;
     /**
      * Rename File to include a random unique identifier 
@@ -21,7 +21,10 @@ const uploadFile = (file) => new Promise((resolve, reject) => {
      * with underscore (no one loves a space in file name 
      * and it would cause troubles later!)
      */
-    const blob = bucket.file(uuidv4() + '_' + originalname.replace(/ /g, "_"));
+
+    const filePath = path == null ? `${uuidv4()}_${originalname}` :  `${path}/${uuidv4()}_${originalname}`
+  
+    const blob = bucket.file(filePath);
     const blobStream = blob.createWriteStream({
         resumable: false
     });
