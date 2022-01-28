@@ -41,7 +41,8 @@ app.use(bodyParser.urlencoded({
 app.post('/upload', async (req, res, next) => {
     try {
         const myFile = req.file;
-        const fileUrl = await uploadFile(myFile)
+        const path = req.body.path
+        const fileUrl = await uploadFile(myFile, path)
         res
             .status(200)
             .json({
